@@ -10,7 +10,6 @@ When working on older codebases, some headers, such as ``ddrawex.h`` have been d
 
 The SDK is obtained from numerous sources, from DirectX SDK June 2010, the Windows DDK, Visual Studio 2022, Codewarrior, and scouring old MSDN CDs. This SDK can be used to supercede even modern SDKs since it contains all APIs available to DirectDraw 7.0.
 
-## Supported compilers.
+## Supported compilers
 
 This SDK is tested on Open Watcom 1.9, CodeWarrior 9.0 for Windows, Visual Studio .NET 2003, Visual Studio 2005, Visual Studio 2008, Visual Studio 2010, Visual Studio 2012, Visual Studio 2013, Visual Studio 2015, Visual Studio 2017, Visual Studio 2019, and Visual Studio 2022.
- 
