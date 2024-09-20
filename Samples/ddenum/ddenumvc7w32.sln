@@ -1,0 +1,18 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ddenum", "ddenumvc7w32.vcproj", "{88444647-7FD8-35C3-854A-7DBE6CDCDC2E}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Release_LTCG = Release_LTCG
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{88444647-7FD8-35C3-854A-7DBE6CDCDC2E}.Release_LTCG.ActiveCfg = Release_LTCG|Win32
+		{88444647-7FD8-35C3-854A-7DBE6CDCDC2E}.Release_LTCG.Build.0 = Release_LTCG|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

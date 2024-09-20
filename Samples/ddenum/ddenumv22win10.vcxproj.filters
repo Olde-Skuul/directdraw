@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="source\windows\resource.h">
+      <Filter>source\windows</Filter>
+    </ClInclude>
+    <ClCompile Include="source\ddenum.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ResourceCompile Include="source\windows\ddenum.rc">
+      <Filter>source\windows</Filter>
+    </ResourceCompile>
+    <Image Include="source\windows\directx.ico">
+      <Filter>source\windows</Filter>
+    </Image>
+    <Filter Include="source">
+      <UniqueIdentifier>CCDD7318-5CE3-3622-B689-B6907E90987B</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\windows">
+      <UniqueIdentifier>C7F6EED6-D198-3055-92A7-2FB8028241F3</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
