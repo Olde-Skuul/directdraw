@@ -29,7 +29,7 @@
 				WholeProgramOptimization="TRUE"
 				OptimizeForProcessor="3"
 				OptimizeForWindowsApplication="TRUE"
-				AdditionalIncludeDirectories="source;source\windows;..\..\Include"
+				AdditionalIncludeDirectories="..\common;source;source\windows;..\..\Include"
 				PreprocessorDefinitions="NDEBUG;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32;DIRECTDRAW_VERSION=0x700;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS"
 				StringPooling="TRUE"
 				ExceptionHandling="FALSE"
@@ -81,6 +81,12 @@
 	<References>
 	</References>
 	<Files>
+		<Filter
+			Name="common">
+			<File
+				RelativePath="..\common\ddmacros.h">
+			</File>
+		</Filter>
 		<Filter
 			Name="source">
 			<File

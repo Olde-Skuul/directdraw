@@ -1,5 +1,5 @@
 #
-# Build ddenum with WMAKE
+# Build fswindow with WMAKE
 # Generated with makeprojects.watcom
 #
 # This file requires the environment variable WATCOM set to the OpenWatcom
@@ -88,14 +88,14 @@ clean_w32: clean_Releasew32 .SYMBOLIC
 
 Releasew32: .SYMBOLIC
 	@if not exist bin @mkdir bin
-	@if not exist "temp\ddenumwatw32rel" @mkdir "temp\ddenumwatw32rel"
+	@if not exist "temp\fswindowwatw32rel" @mkdir "temp\fswindowwatw32rel"
 	@set CONFIG=Release
 	@set TARGET=w32
-	@%make bin\ddenumwatw32rel.exe
+	@%make bin\fswindowwatw32rel.exe
 
 clean_Releasew32: .SYMBOLIC
-	@if exist temp\ddenumwatw32rel @rmdir /s /q temp\ddenumwatw32rel
-	@if exist bin\ddenumwatw32rel.exe @del /q bin\ddenumwatw32rel.exe
+	@if exist temp\fswindowwatw32rel @rmdir /s /q temp\fswindowwatw32rel
+	@if exist bin\fswindowwatw32rel.exe @del /q bin\fswindowwatw32rel.exe
 	@-if exist bin @rmdir bin 2>NUL
 	@-if exist temp @rmdir temp 2>NUL
 
@@ -113,7 +113,7 @@ temp:
 # Disable building this make file
 #
 
-ddenumwatw32.wmk:
+fswindowwatw32.wmk:
 	@%null
 
 #
@@ -144,9 +144,9 @@ CONFIG_SUFFIX_Release = rel
 # Base name of the temp directory
 #
 
-BASE_TEMP_DIR = temp\ddenum
+BASE_TEMP_DIR = temp\fswindow
 BASE_SUFFIX = wat$(TARGET_SUFFIX_$(%TARGET))$(CONFIG_SUFFIX_$(%CONFIG))
-TEMP_DIR = temp\ddenum$(BASE_SUFFIX)
+TEMP_DIR = temp\fswindow$(BASE_SUFFIX)
 
 #
 # SOURCE_DIRS = Work directories for the source code
@@ -238,20 +238,21 @@ RC=WRC -ad -r -q -d__WATCOM__=1 -i="$(INCLUDE_DIRS)"
 # Object files to work with for the project
 #
 
-OBJS= $(A)/ddenum.obj
+OBJS= $(A)/fswindow.obj &
+	$(A)/winmain.obj
 
 #
 # Resource files to work with for the project
 #
 
-RC_OBJS= $(A)/ddenum.res
+RC_OBJS= $(A)/fswindow.res
 
 #
 # A = The object file temp folder
 #
 
 A = $(BASE_TEMP_DIR)watw32rel
-bin\ddenumwatw32rel.exe: $(EXTRA_OBJS) $+$(OBJS)$- $+$(RC_OBJS)$- ddenumwatw32.wmk
+bin\fswindowwatw32rel.exe: $(EXTRA_OBJS) $+$(OBJS)$- $+$(RC_OBJS)$- fswindowwatw32.wmk
 	@SET WOW={$+$(OBJS)$-}
 	@echo Performing link...
 	@$(LINK) $(LFlagsReleasew32) NAME $^@ FILE @wow

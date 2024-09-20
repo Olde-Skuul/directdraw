@@ -152,7 +152,8 @@ TEMP_DIR = temp\modetest$(BASE_SUFFIX)
 # SOURCE_DIRS = Work directories for the source code
 #
 
-SOURCE_DIRS =source
+SOURCE_DIRS =../common
+SOURCE_DIRS +=;source
 SOURCE_DIRS +=;source/windows
 
 #

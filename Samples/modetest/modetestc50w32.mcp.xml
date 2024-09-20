@@ -84,6 +84,16 @@
 				<SETTING><NAME>UserSearchPaths</NAME>
 					<SETTING>
 						<SETTING><NAME>SearchPath</NAME>
+							<SETTING><NAME>Path</NAME><VALUE>..\common</VALUE></SETTING>
+							<SETTING><NAME>PathFormat</NAME><VALUE>Windows</VALUE></SETTING>
+							<SETTING><NAME>PathRoot</NAME><VALUE>Project</VALUE></SETTING>
+						</SETTING>
+						<SETTING><NAME>Recursive</NAME><VALUE>false</VALUE></SETTING>
+						<SETTING><NAME>FrameworkPath</NAME><VALUE>false</VALUE></SETTING>
+						<SETTING><NAME>HostFlags</NAME><VALUE>All</VALUE></SETTING>
+					</SETTING>
+					<SETTING>
+						<SETTING><NAME>SearchPath</NAME>
 							<SETTING><NAME>Path</NAME><VALUE>source</VALUE></SETTING>
 							<SETTING><NAME>PathFormat</NAME><VALUE>Windows</VALUE></SETTING>
 							<SETTING><NAME>PathRoot</NAME><VALUE>Project</VALUE></SETTING>
@@ -273,6 +283,13 @@
 			<FILELIST>
 				<FILE>
 					<PATHTYPE>Name</PATHTYPE>
+					<PATH>ddmacros.h</PATH>
+					<PATHFORMAT>Windows</PATHFORMAT>
+					<FILEKIND>Text</FILEKIND>
+					<FILEFLAGS></FILEFLAGS>
+				</FILE>
+				<FILE>
+					<PATHTYPE>Name</PATHTYPE>
 					<PATH>modetest.cpp</PATH>
 					<PATHFORMAT>Windows</PATHFORMAT>
 					<FILEKIND>Text</FILEKIND>
@@ -378,6 +395,11 @@
 				</FILE>
 			</FILELIST>
 			<LINKORDER>
+				<FILEREF>
+					<PATHTYPE>Name</PATHTYPE>
+					<PATH>ddmacros.h</PATH>
+					<PATHFORMAT>Windows</PATHFORMAT>
+				</FILEREF>
 				<FILEREF>
 					<PATHTYPE>Name</PATHTYPE>
 					<PATH>modetest.cpp</PATH>
@@ -534,6 +556,14 @@
 				<TARGETNAME>Release</TARGETNAME>
 				<PATHTYPE>Name</PATHTYPE>
 				<PATH>Ws2_32.lib</PATH>
+				<PATHFORMAT>Windows</PATHFORMAT>
+			</FILEREF>
+		</GROUP>
+		<GROUP><NAME>common</NAME>
+			<FILEREF>
+				<TARGETNAME>Release</TARGETNAME>
+				<PATHTYPE>Name</PATHTYPE>
+				<PATH>ddmacros.h</PATH>
 				<PATHFORMAT>Windows</PATHFORMAT>
 			</FILEREF>
 		</GROUP>

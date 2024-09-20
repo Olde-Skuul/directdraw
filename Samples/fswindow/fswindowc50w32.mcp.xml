@@ -220,7 +220,7 @@
 				<SETTING><NAME>MWWarning_C_warn_notinlined</NAME><VALUE>0</VALUE></SETTING>
 				<SETTING><NAME>MWWarning_C_warningerrors</NAME><VALUE>0</VALUE></SETTING>
 				<SETTING><NAME>MWProject_X86_type</NAME><VALUE>Application</VALUE></SETTING>
-				<SETTING><NAME>MWProject_X86_outfile</NAME><VALUE>ddenumc50w32rel.exe</VALUE></SETTING>
+				<SETTING><NAME>MWProject_X86_outfile</NAME><VALUE>fswindowc50w32rel.exe</VALUE></SETTING>
 				<SETTING><NAME>MWCodeGen_X86_processor</NAME><VALUE>PentiumIV</VALUE></SETTING>
 				<SETTING><NAME>MWCodeGen_X86_use_extinst</NAME><VALUE>1</VALUE></SETTING>
 				<SETTING><NAME>MWCodeGen_X86_extinst_mmx</NAME><VALUE>0</VALUE></SETTING>
@@ -283,20 +283,6 @@
 			<FILELIST>
 				<FILE>
 					<PATHTYPE>Name</PATHTYPE>
-					<PATH>ddenum.cpp</PATH>
-					<PATHFORMAT>Windows</PATHFORMAT>
-					<FILEKIND>Text</FILEKIND>
-					<FILEFLAGS></FILEFLAGS>
-				</FILE>
-				<FILE>
-					<PATHTYPE>Name</PATHTYPE>
-					<PATH>ddenum.rc</PATH>
-					<PATHFORMAT>Windows</PATHFORMAT>
-					<FILEKIND>Text</FILEKIND>
-					<FILEFLAGS></FILEFLAGS>
-				</FILE>
-				<FILE>
-					<PATHTYPE>Name</PATHTYPE>
 					<PATH>ddmacros.h</PATH>
 					<PATHFORMAT>Windows</PATHFORMAT>
 					<FILEKIND>Text</FILEKIND>
@@ -304,7 +290,35 @@
 				</FILE>
 				<FILE>
 					<PATHTYPE>Name</PATHTYPE>
+					<PATH>fswindow.cpp</PATH>
+					<PATHFORMAT>Windows</PATHFORMAT>
+					<FILEKIND>Text</FILEKIND>
+					<FILEFLAGS></FILEFLAGS>
+				</FILE>
+				<FILE>
+					<PATHTYPE>Name</PATHTYPE>
+					<PATH>fswindow.h</PATH>
+					<PATHFORMAT>Windows</PATHFORMAT>
+					<FILEKIND>Text</FILEKIND>
+					<FILEFLAGS></FILEFLAGS>
+				</FILE>
+				<FILE>
+					<PATHTYPE>Name</PATHTYPE>
+					<PATH>fswindow.rc</PATH>
+					<PATHFORMAT>Windows</PATHFORMAT>
+					<FILEKIND>Text</FILEKIND>
+					<FILEFLAGS></FILEFLAGS>
+				</FILE>
+				<FILE>
+					<PATHTYPE>Name</PATHTYPE>
 					<PATH>resource.h</PATH>
+					<PATHFORMAT>Windows</PATHFORMAT>
+					<FILEKIND>Text</FILEKIND>
+					<FILEFLAGS></FILEFLAGS>
+				</FILE>
+				<FILE>
+					<PATHTYPE>Name</PATHTYPE>
+					<PATH>winmain.cpp</PATH>
 					<PATHFORMAT>Windows</PATHFORMAT>
 					<FILEKIND>Text</FILEKIND>
 					<FILEFLAGS></FILEFLAGS>
@@ -397,22 +411,32 @@
 			<LINKORDER>
 				<FILEREF>
 					<PATHTYPE>Name</PATHTYPE>
-					<PATH>ddenum.cpp</PATH>
-					<PATHFORMAT>Windows</PATHFORMAT>
-				</FILEREF>
-				<FILEREF>
-					<PATHTYPE>Name</PATHTYPE>
-					<PATH>ddenum.rc</PATH>
-					<PATHFORMAT>Windows</PATHFORMAT>
-				</FILEREF>
-				<FILEREF>
-					<PATHTYPE>Name</PATHTYPE>
 					<PATH>ddmacros.h</PATH>
 					<PATHFORMAT>Windows</PATHFORMAT>
 				</FILEREF>
 				<FILEREF>
 					<PATHTYPE>Name</PATHTYPE>
+					<PATH>fswindow.cpp</PATH>
+					<PATHFORMAT>Windows</PATHFORMAT>
+				</FILEREF>
+				<FILEREF>
+					<PATHTYPE>Name</PATHTYPE>
+					<PATH>fswindow.h</PATH>
+					<PATHFORMAT>Windows</PATHFORMAT>
+				</FILEREF>
+				<FILEREF>
+					<PATHTYPE>Name</PATHTYPE>
+					<PATH>fswindow.rc</PATH>
+					<PATHFORMAT>Windows</PATHFORMAT>
+				</FILEREF>
+				<FILEREF>
+					<PATHTYPE>Name</PATHTYPE>
 					<PATH>resource.h</PATH>
+					<PATHFORMAT>Windows</PATHFORMAT>
+				</FILEREF>
+				<FILEREF>
+					<PATHTYPE>Name</PATHTYPE>
+					<PATH>winmain.cpp</PATH>
 					<PATHFORMAT>Windows</PATHFORMAT>
 				</FILEREF>
 				<FILEREF>
@@ -572,7 +596,7 @@
 				<FILEREF>
 					<TARGETNAME>Release</TARGETNAME>
 					<PATHTYPE>Name</PATHTYPE>
-					<PATH>ddenum.rc</PATH>
+					<PATH>fswindow.rc</PATH>
 					<PATHFORMAT>Windows</PATHFORMAT>
 				</FILEREF>
 				<FILEREF>
@@ -585,7 +609,19 @@
 			<FILEREF>
 				<TARGETNAME>Release</TARGETNAME>
 				<PATHTYPE>Name</PATHTYPE>
-				<PATH>ddenum.cpp</PATH>
+				<PATH>fswindow.cpp</PATH>
+				<PATHFORMAT>Windows</PATHFORMAT>
+			</FILEREF>
+			<FILEREF>
+				<TARGETNAME>Release</TARGETNAME>
+				<PATHTYPE>Name</PATHTYPE>
+				<PATH>fswindow.h</PATH>
+				<PATHFORMAT>Windows</PATHFORMAT>
+			</FILEREF>
+			<FILEREF>
+				<TARGETNAME>Release</TARGETNAME>
+				<PATHTYPE>Name</PATHTYPE>
+				<PATH>winmain.cpp</PATH>
 				<PATHFORMAT>Windows</PATHFORMAT>
 			</FILEREF>
 		</GROUP>

@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="modetest"
-	ProjectGUID="{33913AD5-1A8D-30DD-844D-F093C7809470}"
-	RootNamespace="modetest"
+	Name="fswindow"
+	ProjectGUID="{8EBDED97-6E07-3935-B34F-D65B941C92CA}"
+	RootNamespace="fswindow"
 	Keyword="Win32Proj">
 	<Platforms>
 		<Platform
@@ -14,7 +14,7 @@
 		<Configuration
 			Name="Release_LTCG|Win32"
 			OutputDirectory="bin\"
-			IntermediateDirectory="temp\modetestvc7w32ltc\"
+			IntermediateDirectory="temp\fswindowvc7w32ltc\"
 			ConfigurationType="1"
 			WholeProgramOptimization="TRUE">
 			<Tool
@@ -47,7 +47,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="Kernel32.lib Gdi32.lib Shell32.lib Ole32.lib User32.lib Advapi32.lib version.lib Ws2_32.lib Comctl32.lib WinMM.lib ddraw.lib"
-				OutputFile="&quot;$(OutDir)modetestvc7w32ltc.exe&quot;"
+				OutputFile="&quot;$(OutDir)fswindowvc7w32ltc.exe&quot;"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\Lib\x86"
 				GenerateDebugInformation="FALSE"
@@ -90,15 +90,21 @@
 		<Filter
 			Name="source">
 			<File
-				RelativePath="source\modetest.cpp">
+				RelativePath="source\fswindow.cpp">
+			</File>
+			<File
+				RelativePath="source\fswindow.h">
+			</File>
+			<File
+				RelativePath="source\winmain.cpp">
 			</File>
 			<Filter
 				Name="windows">
 				<File
-					RelativePath="source\windows\modetest.ico">
+					RelativePath="source\windows\directx.ico">
 				</File>
 				<File
-					RelativePath="source\windows\modetest.rc">
+					RelativePath="source\windows\fswindow.rc">
 				</File>
 				<File
 					RelativePath="source\windows\resource.h">

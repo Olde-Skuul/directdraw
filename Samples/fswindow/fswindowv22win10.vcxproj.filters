@@ -4,26 +4,32 @@
     <ClInclude Include="..\common\ddmacros.h">
       <Filter>common</Filter>
     </ClInclude>
+    <ClInclude Include="source\fswindow.h">
+      <Filter>source</Filter>
+    </ClInclude>
     <ClInclude Include="source\windows\resource.h">
       <Filter>source\windows</Filter>
     </ClInclude>
-    <ClCompile Include="source\modetest.cpp">
+    <ClCompile Include="source\fswindow.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ResourceCompile Include="source\windows\modetest.rc">
+    <ClCompile Include="source\winmain.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ResourceCompile Include="source\windows\fswindow.rc">
       <Filter>source\windows</Filter>
     </ResourceCompile>
-    <Image Include="source\windows\modetest.ico">
+    <Image Include="source\windows\directx.ico">
       <Filter>source\windows</Filter>
     </Image>
     <Filter Include="common">
-      <UniqueIdentifier>896B48D6-4BFE-3505-B529-9391E40C53EE</UniqueIdentifier>
+      <UniqueIdentifier>B3433958-37DB-36B2-B019-D4D940B4ED07</UniqueIdentifier>
     </Filter>
     <Filter Include="source">
-      <UniqueIdentifier>6D2FDA37-6E01-3BBE-8154-AFDCF39D1E53</UniqueIdentifier>
+      <UniqueIdentifier>1F13C07C-1E79-3E9A-ADE1-E734426B4D09</UniqueIdentifier>
     </Filter>
     <Filter Include="source\windows">
-      <UniqueIdentifier>E9D99848-038E-3D22-8976-948B845C6686</UniqueIdentifier>
+      <UniqueIdentifier>E39DB12A-5A4A-30A8-9E0C-6B34A31BBDBA</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
