@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="source\windows\resource.h">
+      <Filter>source\windows</Filter>
+    </ClInclude>
+    <ClCompile Include="source\modetest.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ResourceCompile Include="source\windows\modetest.rc">
+      <Filter>source\windows</Filter>
+    </ResourceCompile>
+    <Image Include="source\windows\modetest.ico">
+      <Filter>source\windows</Filter>
+    </Image>
+    <Filter Include="source">
+      <UniqueIdentifier>6D2FDA37-6E01-3BBE-8154-AFDCF39D1E53</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\windows">
+      <UniqueIdentifier>E9D99848-038E-3D22-8976-948B845C6686</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
