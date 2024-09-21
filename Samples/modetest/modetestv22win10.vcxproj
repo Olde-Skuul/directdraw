@@ -229,7 +229,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\common\ddmacros.h" />
+    <ClInclude Include="..\common\ddutil.h" />
+    <ClInclude Include="..\common\dsutil.h" />
     <ClInclude Include="source\windows\resource.h" />
+    <ClCompile Include="..\common\ddutil.cpp" />
+    <ClCompile Include="..\common\dsutil.cpp" />
     <ClCompile Include="source\modetest.cpp" />
     <ResourceCompile Include="source\windows\modetest.rc" />
     <Image Include="source\windows\modetest.ico" />

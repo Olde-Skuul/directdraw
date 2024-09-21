@@ -290,6 +290,34 @@
 				</FILE>
 				<FILE>
 					<PATHTYPE>Name</PATHTYPE>
+					<PATH>ddutil.cpp</PATH>
+					<PATHFORMAT>Windows</PATHFORMAT>
+					<FILEKIND>Text</FILEKIND>
+					<FILEFLAGS></FILEFLAGS>
+				</FILE>
+				<FILE>
+					<PATHTYPE>Name</PATHTYPE>
+					<PATH>ddutil.h</PATH>
+					<PATHFORMAT>Windows</PATHFORMAT>
+					<FILEKIND>Text</FILEKIND>
+					<FILEFLAGS></FILEFLAGS>
+				</FILE>
+				<FILE>
+					<PATHTYPE>Name</PATHTYPE>
+					<PATH>dsutil.cpp</PATH>
+					<PATHFORMAT>Windows</PATHFORMAT>
+					<FILEKIND>Text</FILEKIND>
+					<FILEFLAGS></FILEFLAGS>
+				</FILE>
+				<FILE>
+					<PATHTYPE>Name</PATHTYPE>
+					<PATH>dsutil.h</PATH>
+					<PATHFORMAT>Windows</PATHFORMAT>
+					<FILEKIND>Text</FILEKIND>
+					<FILEFLAGS></FILEFLAGS>
+				</FILE>
+				<FILE>
+					<PATHTYPE>Name</PATHTYPE>
 					<PATH>fswindow.cpp</PATH>
 					<PATHFORMAT>Windows</PATHFORMAT>
 					<FILEKIND>Text</FILEKIND>
@@ -412,6 +440,26 @@
 				<FILEREF>
 					<PATHTYPE>Name</PATHTYPE>
 					<PATH>ddmacros.h</PATH>
+					<PATHFORMAT>Windows</PATHFORMAT>
+				</FILEREF>
+				<FILEREF>
+					<PATHTYPE>Name</PATHTYPE>
+					<PATH>ddutil.cpp</PATH>
+					<PATHFORMAT>Windows</PATHFORMAT>
+				</FILEREF>
+				<FILEREF>
+					<PATHTYPE>Name</PATHTYPE>
+					<PATH>ddutil.h</PATH>
+					<PATHFORMAT>Windows</PATHFORMAT>
+				</FILEREF>
+				<FILEREF>
+					<PATHTYPE>Name</PATHTYPE>
+					<PATH>dsutil.cpp</PATH>
+					<PATHFORMAT>Windows</PATHFORMAT>
+				</FILEREF>
+				<FILEREF>
+					<PATHTYPE>Name</PATHTYPE>
+					<PATH>dsutil.h</PATH>
 					<PATHFORMAT>Windows</PATHFORMAT>
 				</FILEREF>
 				<FILEREF>
@@ -588,6 +636,30 @@
 				<TARGETNAME>Release</TARGETNAME>
 				<PATHTYPE>Name</PATHTYPE>
 				<PATH>ddmacros.h</PATH>
+				<PATHFORMAT>Windows</PATHFORMAT>
+			</FILEREF>
+			<FILEREF>
+				<TARGETNAME>Release</TARGETNAME>
+				<PATHTYPE>Name</PATHTYPE>
+				<PATH>ddutil.cpp</PATH>
+				<PATHFORMAT>Windows</PATHFORMAT>
+			</FILEREF>
+			<FILEREF>
+				<TARGETNAME>Release</TARGETNAME>
+				<PATHTYPE>Name</PATHTYPE>
+				<PATH>ddutil.h</PATH>
+				<PATHFORMAT>Windows</PATHFORMAT>
+			</FILEREF>
+			<FILEREF>
+				<TARGETNAME>Release</TARGETNAME>
+				<PATHTYPE>Name</PATHTYPE>
+				<PATH>dsutil.cpp</PATH>
+				<PATHFORMAT>Windows</PATHFORMAT>
+			</FILEREF>
+			<FILEREF>
+				<TARGETNAME>Release</TARGETNAME>
+				<PATHTYPE>Name</PATHTYPE>
+				<PATH>dsutil.h</PATH>
 				<PATHFORMAT>Windows</PATHFORMAT>
 			</FILEREF>
 		</GROUP>

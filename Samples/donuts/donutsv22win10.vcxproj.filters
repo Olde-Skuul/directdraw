@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="..\common\ddmacros.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\ddutil.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\dsutil.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="source\donuts.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\input.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\windows\resource.h">
+      <Filter>source\windows</Filter>
+    </ClInclude>
+    <ClCompile Include="..\common\ddutil.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\dsutil.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="source\donuts.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\input.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ResourceCompile Include="source\windows\donuts.rc">
+      <Filter>source\windows</Filter>
+    </ResourceCompile>
+    <Image Include="source\windows\donuts.ico">
+      <Filter>source\windows</Filter>
+    </Image>
+    <Image Include="source\windows\donuts.bmp">
+      <Filter>source\windows</Filter>
+    </Image>
+    <Image Include="source\windows\splash.bmp">
+      <Filter>source\windows</Filter>
+    </Image>
+    <Filter Include="common">
+      <UniqueIdentifier>41DCAFF9-C064-36A2-A37B-CF95EAE4DFD8</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>A14EF2CC-25B6-37B4-96F6-7A923DEE5AAE</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\windows">
+      <UniqueIdentifier>838B54B0-8D43-30E6-A2E8-89E3D5C5419C</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

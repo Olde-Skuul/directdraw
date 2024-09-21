@@ -86,6 +86,18 @@
 			<File
 				RelativePath="..\common\ddmacros.h">
 			</File>
+			<File
+				RelativePath="..\common\ddutil.cpp">
+			</File>
+			<File
+				RelativePath="..\common\ddutil.h">
+			</File>
+			<File
+				RelativePath="..\common\dsutil.cpp">
+			</File>
+			<File
+				RelativePath="..\common\dsutil.h">
+			</File>
 		</Filter>
 		<Filter
 			Name="source">

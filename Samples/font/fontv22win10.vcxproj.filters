@@ -4,9 +4,21 @@
     <ClInclude Include="..\common\ddmacros.h">
       <Filter>common</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\ddutil.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\dsutil.h">
+      <Filter>common</Filter>
+    </ClInclude>
     <ClInclude Include="source\windows\resource.h">
       <Filter>source\windows</Filter>
     </ClInclude>
+    <ClCompile Include="..\common\ddutil.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\dsutil.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
     <ClCompile Include="source\font.cpp">
       <Filter>source</Filter>
     </ClCompile>

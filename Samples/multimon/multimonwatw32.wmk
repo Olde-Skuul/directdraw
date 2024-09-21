@@ -238,7 +238,9 @@ RC=WRC -ad -r -q -d__WATCOM__=1 -i="$(INCLUDE_DIRS)"
 # Object files to work with for the project
 #
 
-OBJS= $(A)/multimon.obj
+OBJS= $(A)/ddutil.obj &
+	$(A)/dsutil.obj &
+	$(A)/multimon.obj
 
 #
 # Resource files to work with for the project

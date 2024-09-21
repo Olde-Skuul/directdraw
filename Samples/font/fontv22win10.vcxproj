@@ -229,7 +229,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\common\ddmacros.h" />
+    <ClInclude Include="..\common\ddutil.h" />
+    <ClInclude Include="..\common\dsutil.h" />
     <ClInclude Include="source\windows\resource.h" />
+    <ClCompile Include="..\common\ddutil.cpp" />
+    <ClCompile Include="..\common\dsutil.cpp" />
     <ClCompile Include="source\font.cpp" />
     <ResourceCompile Include="source\windows\font.rc" />
     <Image Include="source\windows\directx.ico" />
