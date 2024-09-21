@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="..\common\ddmacros.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\ddutil.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\dsutil.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="source\windows\resource.h">
+      <Filter>source\windows</Filter>
+    </ClInclude>
+    <ClCompile Include="..\common\ddutil.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\dsutil.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="source\mosquito.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ResourceCompile Include="source\windows\mosquito.rc">
+      <Filter>source\windows</Filter>
+    </ResourceCompile>
+    <Image Include="source\windows\mosquito.ico">
+      <Filter>source\windows</Filter>
+    </Image>
+    <Image Include="source\windows\mosquit1.bmp">
+      <Filter>source\windows</Filter>
+    </Image>
+    <Image Include="source\windows\mosquit2.bmp">
+      <Filter>source\windows</Filter>
+    </Image>
+    <Image Include="source\windows\mosquit3.bmp">
+      <Filter>source\windows</Filter>
+    </Image>
+    <Filter Include="common">
+      <UniqueIdentifier>A9B052C7-8A7F-3439-93DD-D43747F7DB96</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>2ACC7AA9-CF67-36D3-8C5C-341A7518955D</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\windows">
+      <UniqueIdentifier>4EFA48D0-56D4-3251-926F-0A9E59DD4801</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
