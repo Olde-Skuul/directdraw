@@ -13,6 +13,8 @@ command line tools to clean, build and generate project files.
 
 from __future__ import absolute_import, print_function, unicode_literals
 
+from makeprojects import IDETypes
+
 # ``cleanme`` and ``buildme`` will process build_rules.py in the parent folder
 # if True. Default is false
 # Can be overridden above
@@ -24,18 +26,19 @@ CONTINUE = True
 
 # Create windows projects for Watcom, VS 2022, and Codewarrior
 MAKEPROJECTS = (
-    {"platform": "windows",
-     "ide": ("vs2003", "vs2022"),
-     "type": "app",
-     #"configuration": "Release_LTCG"},
+    {
+        "platform": "windows",
+        "ide": ("vs2003", "vs2022"),
+        "type": "app",
+        "configuration": "Release_LTCG"
     },
-    {"platform": "windows",
-     "ide": ("watcom", "codewarrior"),
-     "type": "app",
-     "configuration": "Release"
-     }
+    {
+        "platform": "windows",
+        "ide": ("watcom", "codewarrior"),
+        "type": "app",
+        "configuration": "Release"
+    }
 )
-
 
 ########################################
 
@@ -57,4 +60,11 @@ def configuration_settings(configuration):
 
     configuration.define_list.append("USE_DSOUND")
     configuration.libraries_list.append("dsound.lib")
-    configuration.libraries_list.append("dinput8.lib")
+
+    # This doesn't exist in ARM 32 for Windows SDKs
+    # Look in input.cpp for the data structures
+    # configuration.libraries_list.append("dinput8.lib")
+
+    # Open Watcom dinput.h doesn't support INITGUID,
+    # so manually include the GUIDs as a library
+    configuration.libraries_list.append("dxguid.lib")

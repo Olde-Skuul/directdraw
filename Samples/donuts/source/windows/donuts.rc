@@ -1,4 +1,7 @@
 #include <windows.h>
+
+// Needed by Watcom for MFT_SEPARATOR
+#include <winuser.h>
 #include "resource.h"
 
 DONUTS_ICON             ICON    donuts.ico

@@ -5,18 +5,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "donuts", "donutsvc7w32.vcpr
 EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
-		Debug = Debug
-		Internal = Internal
-		Release = Release
 		Release_LTCG = Release_LTCG
 	EndGlobalSection
 	GlobalSection(ProjectConfiguration) = postSolution
-		{78F0B7C3-F02D-33F5-9DC9-15BD569BDE3F}.Debug.ActiveCfg = Debug|Win32
-		{78F0B7C3-F02D-33F5-9DC9-15BD569BDE3F}.Debug.Build.0 = Debug|Win32
-		{78F0B7C3-F02D-33F5-9DC9-15BD569BDE3F}.Internal.ActiveCfg = Internal|Win32
-		{78F0B7C3-F02D-33F5-9DC9-15BD569BDE3F}.Internal.Build.0 = Internal|Win32
-		{78F0B7C3-F02D-33F5-9DC9-15BD569BDE3F}.Release.ActiveCfg = Release|Win32
-		{78F0B7C3-F02D-33F5-9DC9-15BD569BDE3F}.Release.Build.0 = Release|Win32
 		{78F0B7C3-F02D-33F5-9DC9-15BD569BDE3F}.Release_LTCG.ActiveCfg = Release_LTCG|Win32
 		{78F0B7C3-F02D-33F5-9DC9-15BD569BDE3F}.Release_LTCG.Build.0 = Release_LTCG|Win32
 	EndGlobalSection

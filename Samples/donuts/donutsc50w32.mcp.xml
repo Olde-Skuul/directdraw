@@ -382,14 +382,14 @@
 				</FILE>
 				<FILE>
 					<PATHTYPE>Name</PATHTYPE>
-					<PATH>dinput8.lib</PATH>
+					<PATH>dsound.lib</PATH>
 					<PATHFORMAT>Windows</PATHFORMAT>
 					<FILEKIND>Library</FILEKIND>
 					<FILEFLAGS></FILEFLAGS>
 				</FILE>
 				<FILE>
 					<PATHTYPE>Name</PATHTYPE>
-					<PATH>dsound.lib</PATH>
+					<PATH>dxguid.lib</PATH>
 					<PATHFORMAT>Windows</PATHFORMAT>
 					<FILEKIND>Library</FILEKIND>
 					<FILEFLAGS></FILEFLAGS>
@@ -531,12 +531,12 @@
 				</FILEREF>
 				<FILEREF>
 					<PATHTYPE>Name</PATHTYPE>
-					<PATH>dinput8.lib</PATH>
+					<PATH>dsound.lib</PATH>
 					<PATHFORMAT>Windows</PATHFORMAT>
 				</FILEREF>
 				<FILEREF>
 					<PATHTYPE>Name</PATHTYPE>
-					<PATH>dsound.lib</PATH>
+					<PATH>dxguid.lib</PATH>
 					<PATHFORMAT>Windows</PATHFORMAT>
 				</FILEREF>
 				<FILEREF>
@@ -616,13 +616,13 @@
 			<FILEREF>
 				<TARGETNAME>Release</TARGETNAME>
 				<PATHTYPE>Name</PATHTYPE>
-				<PATH>dinput8.lib</PATH>
+				<PATH>dsound.lib</PATH>
 				<PATHFORMAT>Windows</PATHFORMAT>
 			</FILEREF>
 			<FILEREF>
 				<TARGETNAME>Release</TARGETNAME>
 				<PATHTYPE>Name</PATHTYPE>
-				<PATH>dsound.lib</PATH>
+				<PATH>dxguid.lib</PATH>
 				<PATHFORMAT>Windows</PATHFORMAT>
 			</FILEREF>
 			<FILEREF>

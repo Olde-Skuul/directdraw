@@ -189,7 +189,7 @@ AFlagsReleasew32= -d__WIN32__=1 -DNDEBUG -D_WINDOWS -DWIN32_LEAN_AND_MEAN -DWIN3
 # Set the Linker flags for each of the build types
 #
 
-LFlagsReleasew32= system nt_win libp ../../Lib/x86 LIBRARY Kernel32.lib,Gdi32.lib,Shell32.lib,Ole32.lib,User32.lib,Advapi32.lib,version.lib,Ws2_32.lib,Comctl32.lib,WinMM.lib,dsound.lib,dinput8.lib,ddraw.lib
+LFlagsReleasew32= system nt_win libp ../../Lib/x86 LIBRARY Kernel32.lib,Gdi32.lib,Shell32.lib,Ole32.lib,User32.lib,Advapi32.lib,version.lib,Ws2_32.lib,Comctl32.lib,WinMM.lib,dsound.lib,dxguid.lib,ddraw.lib
 
 #
 # Set the Resource flags for each of the build types
