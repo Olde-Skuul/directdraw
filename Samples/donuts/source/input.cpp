@@ -16,9 +16,14 @@
 #define DIDFT_OPTIONAL 0x80000000
 #endif
 
+typedef HRESULT(WINAPI* LPDirectInput8Create)(
+	HINSTANCE, DWORD, REFIID, LPVOID*, LPUNKNOWN);
+
 extern HWND hWndMain;
 extern DWORD ReadKeyboardInput(void);
 extern DWORD ReadJoystickInput(void);
+
+static HMODULE g_hDirectInputModule;
 
 // allocate external variables
 DWORD (*ReadGameInput)(void) = ReadKeyboardInput;
@@ -271,19 +276,27 @@ BOOL InitInput(HINSTANCE hInst, HWND /* hWnd */)
 {
 	IDirectInput* pdi;
 
-	// Use CoCreateInstance instead of linking dinput8.lib, because
-	// the library is missing from the ARM 32 bit SDKs
-	if (FAILED(CoCreateInstance(CLSID_DirectInput8, NULL, CLSCTX_INPROC_SERVER,
-			IID_IDirectInput8A, (void**)&pdi))) {
-		OutputDebugStringA(
-			"Unable to create DirectInput interface, DirectX 8.0 is required\n");
+	// Find dinput8.dll
+	g_hDirectInputModule = LoadLibraryA("dinput8.dll");
+	if (!g_hDirectInputModule) {
+		OutputDebugStringA("Unable to load dinput8.dll\n");
 		return FALSE;
 	}
 
-	// Initialize direct input interface
-	if (FAILED(pdi->Initialize(hInst, 0x0800))) {
+	// Get the function pointer
+	LPDirectInput8Create pDirectInput8Create =
+		(LPDirectInput8Create)GetProcAddress(
+			g_hDirectInputModule, "DirectInput8Create");
+	if (!pDirectInput8Create) {
 		OutputDebugStringA(
-			"Unable to initialize DirectInput interface, DirectX 8.0 is required\n");
+			"Unable to find DirectInput8Create, DirectInput 8 required\n");
+		return FALSE;
+	}
+
+	// create the DirectInput interface object
+	if (pDirectInput8Create(
+			hInst, 0x0800, IID_IDirectInput8A, (void**)&pdi, NULL) != DI_OK) {
+		OutputDebugStringA("DirectInput8Create() FAILED\n");
 		return FALSE;
 	}
 
@@ -332,6 +345,12 @@ void CleanupInput(void)
 			g_rgpdevFound[idev]->Release();
 			g_rgpdevFound[idev] = 0;
 		}
+	}
+
+	// Release Dinput8.dll
+	if (g_hDirectInputModule) {
+		FreeLibrary(g_hDirectInputModule);
+		g_hDirectInputModule = NULL;
 	}
 }
 

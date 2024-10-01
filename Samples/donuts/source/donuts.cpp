@@ -375,9 +375,9 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE /* hPrevInstance */,
 		}
 	}
 
-	ScreenX = static_cast<DWORD>(getint(&lpCmdLine, 3840));
-	ScreenY = static_cast<DWORD>(getint(&lpCmdLine, 2160));
-	ScreenBpp = static_cast<DWORD>(getint(&lpCmdLine, 32));
+	ScreenX = static_cast<DWORD>(getint(&lpCmdLine, 640));
+	ScreenY = static_cast<DWORD>(getint(&lpCmdLine, 480));
+	ScreenBpp = static_cast<DWORD>(getint(&lpCmdLine, 8));
 
 	if (!initApplication(hInstance, nCmdShow)) {
 		return FALSE;
