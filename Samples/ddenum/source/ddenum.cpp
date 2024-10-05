@@ -281,7 +281,7 @@ static BOOL WINAPI DDEnumCallback(
 // Desc: Entry point to the program. Initializes everything and calls
 //       DirectDrawEnumerateEx() to get all of the device info.
 //-----------------------------------------------------------------------------
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /* hPrevInstance */,
+int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /* hPrevInstance */,
 	LPSTR /* lpszCmdLine */, int /* nCmdShow */)
 {
 	LPDIRECTDRAWENUMERATEEX pDirectDrawEnumerateEx;

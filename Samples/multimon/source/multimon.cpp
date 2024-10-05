@@ -857,7 +857,7 @@ static HRESULT MainLoop(VOID)
 // Name: WinMain()
 // Desc: Initializes the application, then starts the main application loop.
 //-----------------------------------------------------------------------------
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /* hPrevInstance */,
+int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /* hPrevInstance */,
 	LPSTR /* lpCmdLine */, INT /* nCmdShow */)
 {
 	HRESULT hr;

@@ -342,7 +342,7 @@ static BOOL initApplication(HANDLE hInstance, int /* nCmdShow */)
 /*
  * WinMain
  */
-int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE /* hPrevInstance */,
+int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /* hPrevInstance */,
 	LPSTR lpCmdLine, int nCmdShow)
 {
 	MSG msg;

@@ -38,6 +38,23 @@ GENERIC = True
 # Overrides PROCESS_PROJECT_FILES
 CLEANME_PROCESS_PROJECT_FILES = False
 
+# List of projects to generate if makeprojects is invoked
+# without any parameters, default create recommended
+# project for the host machine
+
+# Create windows projects for Watcom, VS 2022, and Codewarrior
+MAKEPROJECTS = (
+    {"platform": "windows",
+     "ide": ("vs2003", "vs2022"),
+     "type": "app",
+     "configuration": "Release_LTCG"},
+    {"platform": "windows",
+     "ide": ("watcom", "codewarrior"),
+     "type": "app",
+     "configuration": "Release"
+     }
+)
+
 # Check if git is around
 _GIT_FOUND = None
 

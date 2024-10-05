@@ -484,7 +484,7 @@ static BOOL WINAPI DDEnumCallback(
 // Desc: Entry point to the program. Initializes everything and calls
 //       AppIdle() when idle from the message pump.
 //-----------------------------------------------------------------------------
-int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR /* lpszCmdLine */, int nCmdShow)
 {
 	WNDCLASS wc;

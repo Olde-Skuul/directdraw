@@ -540,7 +540,7 @@ static BOOL InitApp(HINSTANCE hInstance, int nCmdShow)
 // Name: WinMain()
 // Desc: Initialization, message loop
 //-----------------------------------------------------------------------------
-int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE /* hPrevInstance */,
+int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /* hPrevInstance */,
 	LPSTR /* lpCmdLine */, int nCmdShow)
 {
 	MSG msg;

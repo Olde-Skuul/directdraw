@@ -691,7 +691,7 @@ static INT_PTR CALLBACK MainDlgProc(
 // Desc: Entry point for the application.  Since we use a simple dialog for
 //       user interaction we don't need to pump messages.
 //-----------------------------------------------------------------------------
-int WINAPI WinMain(HINSTANCE hInst, HINSTANCE /* hPrevInst */,
+int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE /* hPrevInst */,
 	LPSTR /* pCmdLine */, int /* nCmdShow */)
 {
 	if (FAILED(GetDirectDrawDevices())) {
