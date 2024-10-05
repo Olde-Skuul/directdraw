@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="..\common\ddmacros.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\ddutil.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\dsutil.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="source\childfrm.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\dxtex.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\dxtexdoc.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\dxtexview.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\mainfrm.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\stdafx.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\windows\resource.h">
+      <Filter>source\windows</Filter>
+    </ClInclude>
+    <ClCompile Include="..\common\ddutil.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\dsutil.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="source\childfrm.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\dxtex.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\dxtexdoc.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\dxtexview.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\mainfrm.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ResourceCompile Include="source\windows\dxtex.rc">
+      <Filter>source\windows</Filter>
+    </ResourceCompile>
+    <Image Include="source\windows\dxtex.ico">
+      <Filter>source\windows</Filter>
+    </Image>
+    <Image Include="source\windows\dxtexdoc.ico">
+      <Filter>source\windows</Filter>
+    </Image>
+    <Image Include="source\windows\toolbar.bmp">
+      <Filter>source\windows</Filter>
+    </Image>
+    <Filter Include="common">
+      <UniqueIdentifier>B3C40545-E174-3E40-865B-CFCBED767B57</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>73166E2A-1726-3AA4-B7B4-11E1B4200C04</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\windows">
+      <UniqueIdentifier>B94ECB00-7782-373F-A2F8-840BF1ED21E1</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
