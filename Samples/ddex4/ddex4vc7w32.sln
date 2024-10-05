@@ -1,0 +1,18 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ddex4", "ddex4vc7w32.vcproj", "{5CDA0FE9-462B-326B-9618-20FBA2CD3FA8}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Release_LTCG = Release_LTCG
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{5CDA0FE9-462B-326B-9618-20FBA2CD3FA8}.Release_LTCG.ActiveCfg = Release_LTCG|Win32
+		{5CDA0FE9-462B-326B-9618-20FBA2CD3FA8}.Release_LTCG.Build.0 = Release_LTCG|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

@@ -1,10 +1,13 @@
 //-----------------------------------------------------------------------------
-// File: DDEx1.CPP
+// File: DDEx4.CPP
 //
-// Desc: Direct Draw example program 1.  Creates a Direct Draw
-//       object and then a primary surface with a back buffer.
-//       Slowly flips between the primary surface and the back
-//       buffer.  Press F12 to terminate the program.
+// Desc: Direct Draw example program 4.  Adds functionality to
+//       example program 3.  Creates a flipping surface and loads
+//       a bitmap image into an offscreen surface.  Uses BltFast to
+//       copy portions of the offscreen surface to the back buffer
+//       to generate an animation.  Illustrates watching return
+//       code from BltFast to prevent image tearing.  This program
+//       requires 1.2 Meg of video ram.
 //
 // Copyright (c) 1995-1999 Microsoft Corporation. All rights reserved.
 //-----------------------------------------------------------------------------
@@ -20,6 +23,7 @@
 //-----------------------------------------------------------------------------
 #include <windows.h>
 
+#include "ddutil.h"
 #include "resource.h"
 #include <ddraw.h>
 #include <stdarg.h>
@@ -28,14 +32,8 @@
 //-----------------------------------------------------------------------------
 // Local definitions
 //-----------------------------------------------------------------------------
-#define NAME "DDExample1"
-#define TITLE "Direct Draw Example 1"
-
-//-----------------------------------------------------------------------------
-// Default settings
-//-----------------------------------------------------------------------------
-#define TIMER_ID 1
-#define TIMER_RATE 500
+#define NAME "DDExample4"
+#define TITLE "Direct Draw Example 4"
 
 //-----------------------------------------------------------------------------
 // Global data
@@ -43,14 +41,15 @@
 LPDIRECTDRAW7 g_pDD = NULL;                // DirectDraw object
 LPDIRECTDRAWSURFACE7 g_pDDSPrimary = NULL; // DirectDraw primary surface
 LPDIRECTDRAWSURFACE7 g_pDDSBack = NULL;    // DirectDraw back surface
+LPDIRECTDRAWSURFACE7 g_pDDSOne = NULL;     // Offscreen surface 1
+LPDIRECTDRAWPALETTE g_pDDPal = NULL;       // The primary surface palette
 BOOL g_bActive = FALSE;                    // Is application active?
 
 //-----------------------------------------------------------------------------
 // Local data
 //-----------------------------------------------------------------------------
-static char szMsg[] = "Page Flipping Test: Press F12 to exit";
-static char szFrontMsg[] = "Front buffer (F12 to quit)";
-static char szBackMsg[] = "Back buffer (F12 to quit)";
+// Name of our bitmap resource.
+static char szBitmap[] = "ALL";
 
 //-----------------------------------------------------------------------------
 // Name: ReleaseAllObjects()
@@ -62,6 +61,14 @@ static void ReleaseAllObjects(void)
 		if (g_pDDSPrimary != NULL) {
 			g_pDDSPrimary->Release();
 			g_pDDSPrimary = NULL;
+		}
+		if (g_pDDSOne != NULL) {
+			g_pDDSOne->Release();
+			g_pDDSOne = NULL;
+		}
+		if (g_pDDPal != NULL) {
+			g_pDDPal->Release();
+			g_pDDPal = NULL;
 		}
 		g_pDD->Release();
 		g_pDD = NULL;
@@ -87,39 +94,116 @@ static HRESULT InitFail(HWND hWnd, HRESULT hRet, LPCTSTR szError, ...)
 }
 
 //-----------------------------------------------------------------------------
-// Name: UpdateFrame()
-// Desc: Displays the proper text for the page
+// Name: RestoreAll()
+// Desc: Restore all lost objects
 //-----------------------------------------------------------------------------
-static void UpdateFrame(HWND hWnd)
+static HRESULT RestoreAll(void)
 {
-	static BYTE phase = 0;
-	HDC hdc;
-	DDBLTFX ddbltfx;
-	RECT rc;
-	SIZE size;
-
-	// Use the blter to do a color fill to clear the back buffer
-	ZeroMemory(&ddbltfx, sizeof(ddbltfx));
-	ddbltfx.dwSize = sizeof(ddbltfx);
-	ddbltfx.dwFillColor = 0;
-	g_pDDSBack->Blt(NULL, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &ddbltfx);
-
-	if (g_pDDSBack->GetDC(&hdc) == DD_OK) {
-		SetBkColor(hdc, RGB(0, 0, 255));
-		SetTextColor(hdc, RGB(255, 255, 0));
-		if (phase) {
-			GetClientRect(hWnd, &rc);
-			GetTextExtentPointA(
-				hdc, szMsg, static_cast<int>(strlen(szMsg)), &size);
-			TextOutA(hdc, (rc.right - size.cx) / 2, (rc.bottom - size.cy) / 2,
-				szMsg, sizeof(szMsg) - 1);
-			TextOutA(hdc, 0, 0, szFrontMsg, lstrlen(szFrontMsg));
-			phase = 0;
-		} else {
-			TextOutA(hdc, 0, 0, szBackMsg, lstrlen(szBackMsg));
-			phase = 1;
+	HRESULT hRet = g_pDDSPrimary->Restore();
+	if (hRet == DD_OK) {
+		hRet = g_pDDSOne->Restore();
+		if (hRet == DD_OK) {
+			DDReLoadBitmap(g_pDDSOne, szBitmap);
 		}
-		g_pDDSBack->ReleaseDC(hdc);
+	}
+	return hRet;
+}
+
+//-----------------------------------------------------------------------------
+// Name: UpdateFrame()
+// Desc: Decide what needs to be blitted next, wait for flip to complete,
+//       then flip the buffers.
+//-----------------------------------------------------------------------------
+static void UpdateFrame(void)
+{
+	static DWORD lastTickCount[3] = {0, 0, 0};
+	static int currentFrame[3] = {0, 0, 0};
+	DWORD delay[3] = {50, 78, 13};
+	int xpos[3] = {288, 190, 416};
+	int ypos[3] = {128, 300, 256};
+	int i;
+	DWORD thisTickCount;
+	RECT rcRect;
+	HRESULT hRet;
+
+	// Decide which frame will be blitted next
+	thisTickCount = GetTickCount();
+	for (i = 0; i < 3; i++) {
+		if ((thisTickCount - lastTickCount[i]) > delay[i]) {
+			// Move to next frame;
+			lastTickCount[i] = thisTickCount;
+			currentFrame[i]++;
+			if (currentFrame[i] > 59)
+				currentFrame[i] = 0;
+		}
+	}
+
+	// Blit the stuff for the next frame
+	rcRect.left = 0;
+	rcRect.top = 0;
+	rcRect.right = 640;
+	rcRect.bottom = 480;
+	for (;;) {
+		hRet =
+			g_pDDSBack->BltFast(0, 0, g_pDDSOne, &rcRect, DDBLTFAST_NOCOLORKEY);
+
+		if (hRet == DD_OK) {
+			break;
+		}
+		if (hRet == DDERR_SURFACELOST) {
+			hRet = RestoreAll();
+			if (hRet != DD_OK) {
+				return;
+			}
+		}
+		if (hRet != DDERR_WASSTILLDRAWING) {
+			return;
+		}
+	}
+	if (hRet != DD_OK) {
+		return;
+	}
+
+	for (i = 0; i < 3; i++) {
+		rcRect.left = currentFrame[i] % 10 * 64;
+		rcRect.top = currentFrame[i] / 10 * 64 + 480;
+		rcRect.right = currentFrame[i] % 10 * 64 + 64;
+		rcRect.bottom = currentFrame[i] / 10 * 64 + 64 + 480;
+
+		for (;;) {
+			hRet = g_pDDSBack->BltFast(static_cast<DWORD>(xpos[i]),
+				static_cast<DWORD>(ypos[i]), g_pDDSOne, &rcRect,
+				DDBLTFAST_SRCCOLORKEY);
+			if (hRet == DD_OK) {
+				break;
+			}
+			if (hRet == DDERR_SURFACELOST) {
+				hRet = RestoreAll();
+				if (hRet != DD_OK) {
+					return;
+				}
+			}
+			if (hRet != DDERR_WASSTILLDRAWING) {
+				return;
+			}
+		}
+	}
+
+	// Flip the surfaces
+	for (;;) {
+		hRet = g_pDDSPrimary->Flip(NULL, 0);
+		if (hRet == DD_OK) {
+			break;
+		}
+		if (hRet == DDERR_SURFACELOST) {
+			hRet = RestoreAll();
+			if (hRet != DD_OK) {
+				break;
+			}
+		}
+		if (hRet != DDERR_WASSTILLDRAWING) {
+			break;
+		}
 	}
 }
 
@@ -130,8 +214,6 @@ static void UpdateFrame(HWND hWnd)
 static LRESULT CALLBACK WindowProc(
 	HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	HRESULT hRet;
-
 	switch (message) {
 	case WM_ACTIVATE:
 		// Pause if minimized
@@ -158,29 +240,8 @@ static LRESULT CALLBACK WindowProc(
 		// Turn off the cursor since this is a full-screen app
 		SetCursor(NULL);
 		return TRUE;
-
-	case WM_TIMER:
-		// Update and flip surfaces
-		if (g_bActive && TIMER_ID == wParam) {
-			UpdateFrame(hWnd);
-			for (;;) {
-				hRet = g_pDDSPrimary->Flip(NULL, 0);
-				if (hRet == DD_OK) {
-					break;
-				}
-				if (hRet == DDERR_SURFACELOST) {
-					hRet = g_pDDSPrimary->Restore();
-					if (hRet != DD_OK) {
-						break;
-					}
-				}
-				if (hRet != DDERR_WASSTILLDRAWING) {
-					break;
-				}
-			}
-		}
-		break;
 	}
+
 	return DefWindowProcA(hWnd, message, wParam, lParam);
 }
 
@@ -234,11 +295,13 @@ static HRESULT InitApp(HINSTANCE hInstance, int nCmdShow)
 	if (hRet != DD_OK) {
 		return InitFail(hWnd, hRet, "SetCooperativeLevel FAILED");
 	}
+
 	// Set the video mode to 640x480x8
 	hRet = g_pDD->SetDisplayMode(640, 480, 8, 0, 0);
 	if (hRet != DD_OK) {
 		return InitFail(hWnd, hRet, "SetDisplayMode FAILED");
 	}
+
 	// Create the primary surface with 1 back buffer
 	ZeroMemory(&ddsd, sizeof(ddsd));
 	ddsd.dwSize = sizeof(ddsd);
@@ -250,6 +313,7 @@ static HRESULT InitApp(HINSTANCE hInstance, int nCmdShow)
 	if (hRet != DD_OK) {
 		return InitFail(hWnd, hRet, "CreateSurface FAILED");
 	}
+
 	// Get a pointer to the back buffer
 	ZeroMemory(&ddscaps, sizeof(ddscaps));
 	ddscaps.dwCaps = DDSCAPS_BACKBUFFER;
@@ -257,10 +321,21 @@ static HRESULT InitApp(HINSTANCE hInstance, int nCmdShow)
 	if (hRet != DD_OK) {
 		return InitFail(hWnd, hRet, "GetAttachedSurface FAILED");
 	}
-	// Create a timer to flip the pages
-	if (TIMER_ID != SetTimer(hWnd, TIMER_ID, TIMER_RATE, NULL)) {
-		return InitFail(hWnd, hRet, "SetTimer FAILED");
+
+	// Create and set the palette
+	g_pDDPal = DDLoadPalette(g_pDD, szBitmap);
+	if (g_pDDPal) {
+		g_pDDSPrimary->SetPalette(g_pDDPal);
 	}
+
+	// Create the offscreen surface, by loading our bitmap.
+	g_pDDSOne = DDLoadBitmap(g_pDD, szBitmap, 0, 0);
+	if (g_pDDSOne == NULL) {
+		return InitFail(hWnd, hRet, "DDLoadBitmap FAILED");
+	}
+
+	// Set the color key for this bitmap (black)
+	DDSetColorKey(g_pDDSOne, RGB(0, 0, 0));
 
 	return DD_OK;
 }
@@ -278,9 +353,18 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /* hPrevInstance */,
 		return FALSE;
 	}
 
-	while (GetMessageA(&msg, NULL, 0, 0)) {
-		TranslateMessage(&msg);
-		DispatchMessageA(&msg);
+	for (;;) {
+		if (PeekMessageA(&msg, NULL, 0, 0, PM_NOREMOVE)) {
+			if (!GetMessageA(&msg, NULL, 0, 0)) {
+				return static_cast<int>(msg.wParam);
+			}
+			TranslateMessage(&msg);
+			DispatchMessageA(&msg);
+		} else if (g_bActive) {
+			UpdateFrame();
+		} else {
+			// Make sure we go to sleep if we have nothing else to do
+			WaitMessage();
+		}
 	}
-	return static_cast<int>(msg.wParam);
 }

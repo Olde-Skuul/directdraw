@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="..\common\ddmacros.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\ddutil.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\dsutil.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="source\windows\resource.h">
+      <Filter>source\windows</Filter>
+    </ClInclude>
+    <ClCompile Include="..\common\ddutil.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\dsutil.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ddex4.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ResourceCompile Include="source\windows\ddex4.rc">
+      <Filter>source\windows</Filter>
+    </ResourceCompile>
+    <Image Include="source\windows\directx.ico">
+      <Filter>source\windows</Filter>
+    </Image>
+    <Image Include="source\windows\all.bmp">
+      <Filter>source\windows</Filter>
+    </Image>
+    <Filter Include="common">
+      <UniqueIdentifier>F2D6CA13-2E1E-3973-B261-0F01BC6E9B2A</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>C88F1276-98F1-394E-9831-4CE9B030D811</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\windows">
+      <UniqueIdentifier>DF216A37-D9E8-306F-9F24-E120BB166D1E</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

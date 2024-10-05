@@ -1,10 +1,11 @@
 //-----------------------------------------------------------------------------
-// File: DDEx1.CPP
+// File: DDEx2.CPP
 //
-// Desc: Direct Draw example program 1.  Creates a Direct Draw
-//       object and then a primary surface with a back buffer.
-//       Slowly flips between the primary surface and the back
-//       buffer.  Press F12 to terminate the program.
+// Desc: Direct Draw example program 2.  Adds functionality to
+//       example program 1.  Changes the video mode to 640x480x8.
+//       Reads a bitmap file from disk and copies it into the
+//       back buffer and then slowly flips between the primary
+//       surface and the back buffer.  Press F12 to exit the program.
 //
 // Copyright (c) 1995-1999 Microsoft Corporation. All rights reserved.
 //-----------------------------------------------------------------------------
@@ -20,6 +21,7 @@
 //-----------------------------------------------------------------------------
 #include <windows.h>
 
+#include "ddutil.h"
 #include "resource.h"
 #include <ddraw.h>
 #include <stdarg.h>
@@ -28,8 +30,8 @@
 //-----------------------------------------------------------------------------
 // Local definitions
 //-----------------------------------------------------------------------------
-#define NAME "DDExample1"
-#define TITLE "Direct Draw Example 1"
+#define NAME "DDExample2"
+#define TITLE "Direct Draw Example 2"
 
 //-----------------------------------------------------------------------------
 // Default settings
@@ -43,11 +45,13 @@
 LPDIRECTDRAW7 g_pDD = NULL;                // DirectDraw object
 LPDIRECTDRAWSURFACE7 g_pDDSPrimary = NULL; // DirectDraw primary surface
 LPDIRECTDRAWSURFACE7 g_pDDSBack = NULL;    // DirectDraw back surface
+LPDIRECTDRAWPALETTE g_pDDPal = NULL;       // The primary surface palette
 BOOL g_bActive = FALSE;                    // Is application active?
 
 //-----------------------------------------------------------------------------
 // Local data
 //-----------------------------------------------------------------------------
+static char szBackground[] = "BACK";
 static char szMsg[] = "Page Flipping Test: Press F12 to exit";
 static char szFrontMsg[] = "Front buffer (F12 to quit)";
 static char szBackMsg[] = "Back buffer (F12 to quit)";
@@ -62,6 +66,10 @@ static void ReleaseAllObjects(void)
 		if (g_pDDSPrimary != NULL) {
 			g_pDDSPrimary->Release();
 			g_pDDSPrimary = NULL;
+		}
+		if (g_pDDPal != NULL) {
+			g_pDDPal->Release();
+			g_pDDPal = NULL;
 		}
 		g_pDD->Release();
 		g_pDD = NULL;
@@ -94,16 +102,10 @@ static void UpdateFrame(HWND hWnd)
 {
 	static BYTE phase = 0;
 	HDC hdc;
-	DDBLTFX ddbltfx;
 	RECT rc;
 	SIZE size;
 
-	// Use the blter to do a color fill to clear the back buffer
-	ZeroMemory(&ddbltfx, sizeof(ddbltfx));
-	ddbltfx.dwSize = sizeof(ddbltfx);
-	ddbltfx.dwFillColor = 0;
-	g_pDDSBack->Blt(NULL, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &ddbltfx);
-
+	// The back buffer already has a loaded bitmap, so don't clear it
 	if (g_pDDSBack->GetDC(&hdc) == DD_OK) {
 		SetBkColor(hdc, RGB(0, 0, 255));
 		SetTextColor(hdc, RGB(255, 255, 0));
@@ -173,6 +175,10 @@ static LRESULT CALLBACK WindowProc(
 					if (hRet != DD_OK) {
 						break;
 					}
+					hRet = DDReLoadBitmap(g_pDDSBack, szBackground);
+					if (hRet != DD_OK) {
+						break;
+					}
 				}
 				if (hRet != DDERR_WASSTILLDRAWING) {
 					break;
@@ -228,7 +234,6 @@ static HRESULT InitApp(HINSTANCE hInstance, int nCmdShow)
 	if (hRet != DD_OK) {
 		return InitFail(hWnd, hRet, "DirectDrawCreateEx FAILED");
 	}
-
 	// Get exclusive mode
 	hRet = g_pDD->SetCooperativeLevel(hWnd, DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN);
 	if (hRet != DD_OK) {
@@ -257,6 +262,23 @@ static HRESULT InitApp(HINSTANCE hInstance, int nCmdShow)
 	if (hRet != DD_OK) {
 		return InitFail(hWnd, hRet, "GetAttachedSurface FAILED");
 	}
+	// Create and set the palette
+	g_pDDPal = DDLoadPalette(g_pDD, szBackground);
+	if (g_pDDPal == NULL) {
+		return InitFail(hWnd, hRet, "DDLoadPalette FAILED");
+	}
+
+	hRet = g_pDDSPrimary->SetPalette(g_pDDPal);
+	if (hRet != DD_OK) {
+		return InitFail(hWnd, hRet, "SetPalette FAILED");
+	}
+
+	// Load a bitmap into the back buffer.
+	hRet = DDReLoadBitmap(g_pDDSBack, szBackground);
+	if (hRet != DD_OK) {
+		return InitFail(hWnd, hRet, "DDReLoadBitmap FAILED");
+	}
+
 	// Create a timer to flip the pages
 	if (TIMER_ID != SetTimer(hWnd, TIMER_ID, TIMER_RATE, NULL)) {
 		return InitFail(hWnd, hRet, "SetTimer FAILED");

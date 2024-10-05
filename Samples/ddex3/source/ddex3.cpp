@@ -1,10 +1,15 @@
 //-----------------------------------------------------------------------------
-// File: DDEx1.CPP
+// File: DDEx3.CPP
 //
-// Desc: Direct Draw example program 1.  Creates a Direct Draw
-//       object and then a primary surface with a back buffer.
-//       Slowly flips between the primary surface and the back
-//       buffer.  Press F12 to terminate the program.
+// Desc: Direct Draw example program 3.  Adds functionality to
+//       example program 2.  Creates two offscreen surfaces in
+//       addition to the primary surface and back buffer.  Loads
+//       a bitmap file into each offscreen surface.  Uses BltFast
+//       to copy the contents of an offscreen surface to the back
+//       buffer and then flips the buffers and copies the next
+//       offscreen surface to the back buffer.  Press F12 to exit
+//       the program.  This program requires at least 1.2 Megs of
+//       video ram.
 //
 // Copyright (c) 1995-1999 Microsoft Corporation. All rights reserved.
 //-----------------------------------------------------------------------------
@@ -20,6 +25,7 @@
 //-----------------------------------------------------------------------------
 #include <windows.h>
 
+#include "ddutil.h"
 #include "resource.h"
 #include <ddraw.h>
 #include <stdarg.h>
@@ -28,8 +34,8 @@
 //-----------------------------------------------------------------------------
 // Local definitions
 //-----------------------------------------------------------------------------
-#define NAME "DDExample1"
-#define TITLE "Direct Draw Example 1"
+#define NAME "DDExample3"
+#define TITLE "Direct Draw Example 3"
 
 //-----------------------------------------------------------------------------
 // Default settings
@@ -43,14 +49,16 @@
 LPDIRECTDRAW7 g_pDD = NULL;                // DirectDraw object
 LPDIRECTDRAWSURFACE7 g_pDDSPrimary = NULL; // DirectDraw primary surface
 LPDIRECTDRAWSURFACE7 g_pDDSBack = NULL;    // DirectDraw back surface
+LPDIRECTDRAWSURFACE7 g_pDDSOne = NULL;     // Offscreen surface 1
+LPDIRECTDRAWSURFACE7 g_pDDSTwo = NULL;     // Offscreen surface 2
+LPDIRECTDRAWPALETTE g_pDDPal = NULL;       // The primary surface palette
 BOOL g_bActive = FALSE;                    // Is application active?
 
 //-----------------------------------------------------------------------------
 // Local data
 //-----------------------------------------------------------------------------
-static char szMsg[] = "Page Flipping Test: Press F12 to exit";
-static char szFrontMsg[] = "Front buffer (F12 to quit)";
-static char szBackMsg[] = "Back buffer (F12 to quit)";
+// Name of our bitmap resource.
+static char szBitmap[] = "DDEX3";
 
 //-----------------------------------------------------------------------------
 // Name: ReleaseAllObjects()
@@ -62,6 +70,18 @@ static void ReleaseAllObjects(void)
 		if (g_pDDSPrimary != NULL) {
 			g_pDDSPrimary->Release();
 			g_pDDSPrimary = NULL;
+		}
+		if (g_pDDSOne != NULL) {
+			g_pDDSOne->Release();
+			g_pDDSOne = NULL;
+		}
+		if (g_pDDSTwo != NULL) {
+			g_pDDSTwo->Release();
+			g_pDDSTwo = NULL;
+		}
+		if (g_pDDPal != NULL) {
+			g_pDDPal->Release();
+			g_pDDPal = NULL;
 		}
 		g_pDD->Release();
 		g_pDD = NULL;
@@ -87,39 +107,82 @@ static HRESULT InitFail(HWND hWnd, HRESULT hRet, LPCTSTR szError, ...)
 }
 
 //-----------------------------------------------------------------------------
-// Name: UpdateFrame()
-// Desc: Displays the proper text for the page
+// Name: InitSurfaces()
+// Desc: This function reads the bitmap file FRNTBACK.BMP and stores half of it
+//       in offscreen surface 1 and the other half in offscreen surface 2.
 //-----------------------------------------------------------------------------
-static void UpdateFrame(HWND hWnd)
+static BOOL InitSurfaces(void)
+{
+	HBITMAP hbm;
+
+	// Load our bitmap resource.
+	hbm = (HBITMAP)LoadImageA(GetModuleHandle(NULL), szBitmap, IMAGE_BITMAP, 0,
+		0, LR_CREATEDIBSECTION);
+	if (hbm == NULL) {
+		return FALSE;
+	}
+	DDCopyBitmap(g_pDDSOne, hbm, 0, 0, 640, 480);
+	DDCopyBitmap(g_pDDSTwo, hbm, 0, 480, 640, 480);
+	DeleteObject(hbm);
+	return TRUE;
+}
+
+//-----------------------------------------------------------------------------
+// Name: RestoreAll()
+// Desc: Restore all lost objects
+//-----------------------------------------------------------------------------
+static HRESULT RestoreAll(void)
+{
+
+	HRESULT hRet = g_pDDSPrimary->Restore();
+	if (hRet == DD_OK) {
+		hRet = g_pDDSOne->Restore();
+		if (hRet == DD_OK) {
+			hRet = g_pDDSTwo->Restore();
+			if (hRet == DD_OK) {
+				InitSurfaces();
+			}
+		}
+	}
+	return hRet;
+}
+
+//-----------------------------------------------------------------------------
+// Name: UpdateFrame()
+// Desc: Displays the proper image for the page
+//-----------------------------------------------------------------------------
+static void UpdateFrame(HWND /* hWnd */)
 {
 	static BYTE phase = 0;
-	HDC hdc;
-	DDBLTFX ddbltfx;
-	RECT rc;
-	SIZE size;
+	HRESULT hRet;
+	LPDIRECTDRAWSURFACE7 pdds;
+	RECT rcRect;
 
-	// Use the blter to do a color fill to clear the back buffer
-	ZeroMemory(&ddbltfx, sizeof(ddbltfx));
-	ddbltfx.dwSize = sizeof(ddbltfx);
-	ddbltfx.dwFillColor = 0;
-	g_pDDSBack->Blt(NULL, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &ddbltfx);
-
-	if (g_pDDSBack->GetDC(&hdc) == DD_OK) {
-		SetBkColor(hdc, RGB(0, 0, 255));
-		SetTextColor(hdc, RGB(255, 255, 0));
-		if (phase) {
-			GetClientRect(hWnd, &rc);
-			GetTextExtentPointA(
-				hdc, szMsg, static_cast<int>(strlen(szMsg)), &size);
-			TextOutA(hdc, (rc.right - size.cx) / 2, (rc.bottom - size.cy) / 2,
-				szMsg, sizeof(szMsg) - 1);
-			TextOutA(hdc, 0, 0, szFrontMsg, lstrlen(szFrontMsg));
-			phase = 0;
-		} else {
-			TextOutA(hdc, 0, 0, szBackMsg, lstrlen(szBackMsg));
-			phase = 1;
+	rcRect.left = 0;
+	rcRect.top = 0;
+	rcRect.right = 640;
+	rcRect.bottom = 480;
+	if (phase) {
+		pdds = g_pDDSTwo;
+		phase = 0;
+	} else {
+		pdds = g_pDDSOne;
+		phase = 1;
+	}
+	for (;;) {
+		hRet = g_pDDSBack->BltFast(0, 0, pdds, &rcRect, FALSE);
+		if (hRet == DD_OK) {
+			break;
 		}
-		g_pDDSBack->ReleaseDC(hdc);
+		if (hRet == DDERR_SURFACELOST) {
+			hRet = RestoreAll();
+			if (hRet != DD_OK) {
+				break;
+			}
+		}
+		if (hRet != DDERR_WASSTILLDRAWING) {
+			break;
+		}
 	}
 }
 
@@ -169,7 +232,7 @@ static LRESULT CALLBACK WindowProc(
 					break;
 				}
 				if (hRet == DDERR_SURFACELOST) {
-					hRet = g_pDDSPrimary->Restore();
+					hRet = RestoreAll();
 					if (hRet != DD_OK) {
 						break;
 					}
@@ -228,17 +291,18 @@ static HRESULT InitApp(HINSTANCE hInstance, int nCmdShow)
 	if (hRet != DD_OK) {
 		return InitFail(hWnd, hRet, "DirectDrawCreateEx FAILED");
 	}
-
 	// Get exclusive mode
 	hRet = g_pDD->SetCooperativeLevel(hWnd, DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN);
 	if (hRet != DD_OK) {
 		return InitFail(hWnd, hRet, "SetCooperativeLevel FAILED");
 	}
+
 	// Set the video mode to 640x480x8
 	hRet = g_pDD->SetDisplayMode(640, 480, 8, 0, 0);
 	if (hRet != DD_OK) {
 		return InitFail(hWnd, hRet, "SetDisplayMode FAILED");
 	}
+
 	// Create the primary surface with 1 back buffer
 	ZeroMemory(&ddsd, sizeof(ddsd));
 	ddsd.dwSize = sizeof(ddsd);
@@ -250,6 +314,7 @@ static HRESULT InitApp(HINSTANCE hInstance, int nCmdShow)
 	if (hRet != DD_OK) {
 		return InitFail(hWnd, hRet, "CreateSurface FAILED");
 	}
+
 	// Get a pointer to the back buffer
 	ZeroMemory(&ddscaps, sizeof(ddscaps));
 	ddscaps.dwCaps = DDSCAPS_BACKBUFFER;
@@ -257,6 +322,33 @@ static HRESULT InitApp(HINSTANCE hInstance, int nCmdShow)
 	if (hRet != DD_OK) {
 		return InitFail(hWnd, hRet, "GetAttachedSurface FAILED");
 	}
+
+	// Create a offscreen bitmap.
+	ddsd.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
+	ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
+	ddsd.dwHeight = 480;
+	ddsd.dwWidth = 640;
+	hRet = g_pDD->CreateSurface(&ddsd, &g_pDDSOne, NULL);
+	if (hRet != DD_OK) {
+		return InitFail(hWnd, hRet, "CreateSurface FAILED");
+	}
+
+	// Create another offscreen bitmap.
+	hRet = g_pDD->CreateSurface(&ddsd, &g_pDDSTwo, NULL);
+	if (hRet != DD_OK) {
+		return InitFail(hWnd, hRet, "CreateSurface FAILED");
+	}
+
+	// Create a Direct Draw Palette and associate it with the front buffer
+	g_pDDPal = DDLoadPalette(g_pDD, szBitmap);
+	if (g_pDDPal) {
+		g_pDDSPrimary->SetPalette(g_pDDPal);
+	}
+
+	if (!InitSurfaces()) {
+		return InitFail(hWnd, hRet, "InitSurfaces FAILED");
+	}
+
 	// Create a timer to flip the pages
 	if (TIMER_ID != SetTimer(hWnd, TIMER_ID, TIMER_RATE, NULL)) {
 		return InitFail(hWnd, hRet, "SetTimer FAILED");
@@ -269,7 +361,7 @@ static HRESULT InitApp(HINSTANCE hInstance, int nCmdShow)
 // Name: WinMain()
 // Desc: Initialization, message loop
 //-----------------------------------------------------------------------------
-int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /* hPrevInstance */,
+int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE /* hPrevInstance */,
 	LPSTR /* lpCmdLine */, int nCmdShow)
 {
 	MSG msg;

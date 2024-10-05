@@ -1,0 +1,261 @@
+#
+# Build ddex2 with WMAKE
+# Generated with makeprojects.watcom
+#
+# This file requires the environment variable WATCOM set to the OpenWatcom
+# folder
+# Example: WATCOM=C:\WATCOM
+#
+
+#
+# Test for required environment variables
+#
+
+!ifndef %WATCOM
+!error The environment variable WATCOM was not declared
+!endif
+
+#
+# Set the set of known files supported
+# Note: They are in the reverse order of building. .x86 is built first, then .c
+# until the .exe or .lib files are built
+#
+
+.extensions:
+.extensions: .exe .exp .lib .obj .cpp .c .x86 .i86 .h .res .rc
+
+#
+# This speeds up the building process for Watcom because it keeps the apps in
+# memory and doesn't have to reload for every source file
+# Note: There is a bug that if the wlib app is loaded, it will not
+# get the proper WOW file if a full build is performed
+#
+# The bug is gone from Watcom 1.2
+#
+
+!ifdef %WATCOM
+!ifdef __LOADDLL__
+!loaddll wcc $(%WATCOM)/binnt/wccd
+!loaddll wccaxp $(%WATCOM)/binnt/wccdaxp
+!loaddll wcc386 $(%WATCOM)/binnt/wccd386
+!loaddll wpp $(%WATCOM)/binnt/wppdi86
+!loaddll wppaxp $(%WATCOM)/binnt/wppdaxp
+!loaddll wpp386 $(%WATCOM)/binnt/wppd386
+!loaddll wlink $(%WATCOM)/binnt/wlinkd
+!loaddll wlib $(%WATCOM)/binnt/wlibd
+!endif
+!endif
+
+#
+# Custom output files
+#
+
+EXTRA_OBJS=
+
+#
+# List the names of all of the final binaries to build and clean
+#
+
+all: Release .SYMBOLIC
+	@%null
+
+clean: clean_Release .SYMBOLIC
+	@%null
+
+#
+# Configurations
+#
+
+Release: Releasew32 .SYMBOLIC
+	@%null
+
+clean_Release: clean_Releasew32 .SYMBOLIC
+	@%null
+
+#
+# Platforms
+#
+
+w32: Releasew32 .SYMBOLIC
+	@%null
+
+clean_w32: clean_Releasew32 .SYMBOLIC
+	@%null
+
+#
+# List of binaries to build or clean
+#
+
+Releasew32: .SYMBOLIC
+	@if not exist bin @mkdir bin
+	@if not exist "temp\ddex2watw32rel" @mkdir "temp\ddex2watw32rel"
+	@set CONFIG=Release
+	@set TARGET=w32
+	@%make bin\ddex2watw32rel.exe
+
+clean_Releasew32: .SYMBOLIC
+	@if exist temp\ddex2watw32rel @rmdir /s /q temp\ddex2watw32rel
+	@if exist bin\ddex2watw32rel.exe @del /q bin\ddex2watw32rel.exe
+	@-if exist bin @rmdir bin 2>NUL
+	@-if exist temp @rmdir temp 2>NUL
+
+#
+# Create the folder for the binary output
+#
+
+bin:
+	@if not exist bin @mkdir bin
+
+temp:
+	@if not exist temp @mkdir temp
+
+#
+# Disable building this make file
+#
+
+ddex2watw32.wmk:
+	@%null
+
+#
+# Default configuration
+#
+
+!ifndef CONFIG
+CONFIG = Release
+!endif
+
+#
+# Default target
+#
+
+!ifndef TARGET
+TARGET = w32
+!endif
+
+#
+# Directory name fragments
+#
+
+TARGET_SUFFIX_w32 = w32
+
+CONFIG_SUFFIX_Release = rel
+
+#
+# Base name of the temp directory
+#
+
+BASE_TEMP_DIR = temp\ddex2
+BASE_SUFFIX = wat$(TARGET_SUFFIX_$(%TARGET))$(CONFIG_SUFFIX_$(%CONFIG))
+TEMP_DIR = temp\ddex2$(BASE_SUFFIX)
+
+#
+# SOURCE_DIRS = Work directories for the source code
+#
+
+SOURCE_DIRS =../common
+SOURCE_DIRS +=;source
+SOURCE_DIRS +=;source/windows
+
+#
+# INCLUDE_DIRS = Header includes
+#
+
+INCLUDE_DIRS = $(SOURCE_DIRS)
+INCLUDE_DIRS +=;../../Include
+
+#
+# Tell WMAKE where to find the files to work with
+#
+
+.c: $(SOURCE_DIRS)
+.cpp: $(SOURCE_DIRS)
+.x86: $(SOURCE_DIRS)
+.i86: $(SOURCE_DIRS)
+.rc: $(SOURCE_DIRS)
+
+#
+# Set the compiler flags for each of the build types
+#
+
+CFlagsReleasew32= -bm -bt=NT -dTYPE_BOOL=1 -dTARGET_CPU_X86=1 -dTARGET_OS_WIN32=1 -i="$(%WATCOM)/h;$(%WATCOM)/h/nt;$(%WATCOM)/h/nt/directx" -d0 -oaxsh -DNDEBUG -D_WINDOWS -DWIN32_LEAN_AND_MEAN -DWIN32 -DDIRECTDRAW_VERSION=0x700 -D_CRT_NONSTDC_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS
+
+#
+# Set the assembler flags for each of the build types
+#
+
+AFlagsReleasew32= -d__WIN32__=1 -DNDEBUG -D_WINDOWS -DWIN32_LEAN_AND_MEAN -DWIN32 -DDIRECTDRAW_VERSION=0x700 -D_CRT_NONSTDC_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS
+
+#
+# Set the Linker flags for each of the build types
+#
+
+LFlagsReleasew32= system nt_win libp ../../Lib/x86 LIBRARY Kernel32.lib,Gdi32.lib,Shell32.lib,Ole32.lib,User32.lib,Advapi32.lib,version.lib,Ws2_32.lib,Comctl32.lib,WinMM.lib,ddraw.lib
+
+#
+# Set the Resource flags for each of the build types
+#
+
+RFlagsReleasew32= -bt=nt -i="$(%WATCOM)/h/nt" -DNDEBUG -D_WINDOWS -DWIN32_LEAN_AND_MEAN -DWIN32 -DDIRECTDRAW_VERSION=0x700 -D_CRT_NONSTDC_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS
+
+# Now, set the compiler flags
+
+CL=WCC386 -6r -fp6 -w4 -ei -j -mf -zq -zp=8 -wcd=7 -i="$(INCLUDE_DIRS)"
+CP=WPP386 -6r -fp6 -w4 -ei -j -mf -zq -zp=8 -wcd=7 -i="$(INCLUDE_DIRS)"
+ASM=WASM -5r -fp6 -w4 -zq -d__WATCOM__=1
+LINK=*WLINK option caseexact option quiet PATH $(%WATCOM)/binnt;$(%WATCOM)/binw;.
+RC=WRC -ad -r -q -d__WATCOM__=1 -i="$(INCLUDE_DIRS)"
+
+# Set the default build rules
+# Requires ASM, CP to be set
+
+# Macro expansion is on page 93 of the C/C++ Tools User's Guide
+# $^* = C:\dir\target (No extension)
+# $[* = C:\dir\dep (No extension)
+# $^@ = C:\dir\target.ext
+# $^: = C:\dir\
+
+.rc.res : .AUTODEPEND
+	@echo $[&.rc / $(%CONFIG) / $(%TARGET)
+	@$(RC) $(RFlags$(%CONFIG)$(%TARGET)) $[*.rc -fo=$^@
+
+.i86.obj : .AUTODEPEND
+	@echo $[&.i86 / $(%CONFIG) / $(%TARGET)
+	@$(ASM) -0 -w4 -zq -d__WATCOM__=1 $(AFlags$(%CONFIG)$(%TARGET)) $[*.i86 -fo=$^@ -fr=$^*.err
+
+.x86.obj : .AUTODEPEND
+	@echo $[&.x86 / $(%CONFIG) / $(%TARGET)
+	@$(ASM) $(AFlags$(%CONFIG)$(%TARGET)) $[*.x86 -fo=$^@ -fr=$^*.err
+
+.c.obj : .AUTODEPEND
+	@echo $[&.c / $(%CONFIG) / $(%TARGET)
+	@$(CL) $(CFlags$(%CONFIG)$(%TARGET)) $[*.c -fo=$^@ -fr=$^*.err
+
+.cpp.obj : .AUTODEPEND
+	@echo $[&.cpp / $(%CONFIG) / $(%TARGET)
+	@$(CP) $(CFlags$(%CONFIG)$(%TARGET)) $[*.cpp -fo=$^@ -fr=$^*.err
+
+#
+# Object files to work with for the project
+#
+
+OBJS= $(A)/ddex2.obj &
+	$(A)/ddutil.obj &
+	$(A)/dsutil.obj
+
+#
+# Resource files to work with for the project
+#
+
+RC_OBJS= $(A)/ddex2.res
+
+#
+# A = The object file temp folder
+#
+
+A = $(BASE_TEMP_DIR)watw32rel
+bin\ddex2watw32rel.exe: $(EXTRA_OBJS) $+$(OBJS)$- $+$(RC_OBJS)$- ddex2watw32.wmk
+	@SET WOW={$+$(OBJS)$-}
+	@echo Performing link...
+	@$(LINK) $(LFlagsReleasew32) NAME $^@ FILE @wow
+	@echo Performing resource linking...
+	@WRC -q -bt=nt $+$(RC_OBJS)$- $^@
